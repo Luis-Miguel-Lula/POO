@@ -114,7 +114,8 @@ public class TelaPetShop extends JFrame {
 				exibirTexto("Pet cadastrado com sucesso!\n\n" + novo.exibirDados() + c1.exibirInformacoes()); 
 				limparCampos();
 			} 
-		});
+		}); 
+		
 		//---BUSCAR---- 
 		btnBuscar.addActionListener(new ActionListener(){ 
 			public void actionPerformed(ActionEvent e) { 
@@ -124,16 +125,35 @@ public class TelaPetShop extends JFrame {
 			}
 			
 		}); 
+		//---ATUALIZAR--- 
+		btnAtualizar.addActionListener(new ActionListener(){ 
+			public void actionPerformed(ActionEvent e) { 
+				String nome = campNome.getText().trim(); 
+				repositorio.buscarPorNome(nome); 
+				
+			}
+			
+		}); 
+		
 		//----REMOVER----
-		btnRemover.addActionListener(new ActionListener() {
+		btnRemover.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String nome = campNome.getText().trim();
 				boolean ok = repositorio.remover(nome);
 				if (ok) limparCampos();
-				}});
+				}
+			});  
+		//---LISTAR TODOS---
+		btnListar.addActionListener(new ActionListener(){ 
+			public void actionPerformed(ActionEvent e) { 
+				String nome = campNome.getText().trim(); 
+				repositorio.buscarPorNome(nome); 
+				
 			}
-	    
-
+			
+		}); 
+	}
+			
 
 	// ── Métodos auxiliares ─────────────────────────────────
 
@@ -153,3 +173,4 @@ public class TelaPetShop extends JFrame {
 	}
 
 }
+
