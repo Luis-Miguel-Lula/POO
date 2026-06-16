@@ -1,10 +1,10 @@
 
 		public class Cliente {
-		    private String nome; 
+		    private String tutor; 
 			private String telefone; 
 			public Cliente(String nome,String telefone){ 
 				if(nome != "") { 
-					this.nome = nome; 
+					this.tutor = nome; 
 				}else { 
 					System.out.println("o nome não pode ser vazio ou nulo");
 					System.exit(0);
@@ -13,13 +13,13 @@
 			}
 			public void setNome(String nome) {
 				if(nome != "") { 
-					this.nome = nome; 
+					this.tutor = nome; 
 				}else { 
 					System.out.println("o nome não pode ser vazio ou nulo");
 				}
 			}
 			public String getNome() {
-				return nome;
+				return tutor;
 			}
 			public void setTelefone(String telefone) {
 				this.telefone = telefone;
@@ -30,9 +30,9 @@
 				return telefone;
 			}
 
-		    public void exibirInformacoes() { 
-				System.out.println("Seu nome:" +nome);
-				System.out.println("Seu telefone:" +telefone);
+		    public String exibirInformacoes() { 
+		    	return "Tutor: " + tutor + System.lineSeparator() + "Telefone: " + telefone;
+
 			}
 			
 		       
