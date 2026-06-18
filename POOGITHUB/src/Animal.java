@@ -24,27 +24,29 @@
 		public void setIdade(int idade) {
 			this.idade = idade;
 		}
+		
 		 public String getRaca() {
-				return nome;
-			}
+				return raca;
+		}
 
-		public void setRaca(String nome) {
-			this.nome = nome;
+		public void setRaca(String raca) {
+			this.raca = raca;
 		}
 		public String getTutor() {
-			return nome;
+			return tutor;
 		}
 
-			public void setTutor(String nome) {
-				this.nome = nome;
-			}
-			 public int getTelefone(){
-					return telefone ;
-				}
-
-				public void setTelefone(int telefone)  {       
-					this.telefone = telefone;
-				}
+		public void setTutor(String tutor) {
+			this.tutor = tutor;
+		}
+		
+		public int getTelefone(){
+				return telefone ;
+		}
+	
+		public void setTelefone(int telefone)  {       
+				this.telefone = telefone;
+		}
 
 		public Animal(String nome, int idade) {
 	        this.nome = nome;
@@ -52,7 +54,7 @@
 	    }
 		
 		public String exibirDados() {
-			return "Nome:" + nome +  System.lineSeparator() + "Raca:" + raca + System.lineSeparator() + "Idade:" + idade + System.lineSeparator() + "Tutor:" + tutor +  System.lineSeparator() + "Telefone: " + telefone; 
+			return "Nome:" + this.nome +  System.lineSeparator() + "Raca:" + this.raca + System.lineSeparator() + "Idade:" + this.idade + System.lineSeparator() + "Tutor:" + this.tutor +  System.lineSeparator() + "Telefone: " + this.telefone; 
 
 		}
 

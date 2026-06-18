@@ -53,16 +53,16 @@ public class PetShopRepositorio {
 		return 0;
 	}
 	//Atualização de dados
-	public boolean atualizarDados(String nomeBusca,String novaRaca, int novaIdade, String novoTutor, int telefone) {
-	    for (int i = 0; i < animais.size(); i++) {
-	        Animal petAtual = animais.get(i);
+	public boolean atualizarDados(String nomeBusca, String novaRaca, int novaIdade, String novoTutor, int telefone) {
+	    for (Animal petAtual : animais) {
 	        if (petAtual.getNome().equalsIgnoreCase(nomeBusca)) {
 	            petAtual.setRaca(novaRaca);
 	            petAtual.setIdade(novaIdade);
 	            petAtual.setTutor(novoTutor);
+	            petAtual.setTelefone(telefone);
 	            return true;
 	        }
 	    }
-	    return false; 
+	    return false;
 	}
 }

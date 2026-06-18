@@ -121,50 +121,65 @@ public class TelaPetShop extends JFrame {
 		btnBuscar.addActionListener(new ActionListener(){ 
 			public void actionPerformed(ActionEvent e) { 
 				String nome = campNome.getText().trim(); 
-				exibirTexto( repositorio.buscarPorNome(nome).exibirDados()); 
+				if(nome.isEmpty()) {
+					exibirTexto("Seu nome esta vazio para a busca");
+				}
+				exibirTexto( repositorio.buscarPorNome(nome).exibirDados() ); 
 			 
 				
 			}
 			
 		}); 
 		//---ATUALIZAR--- 
-		btnAtualizar.addActionListener(new ActionListener(){ 
-			public void actionPerformed(ActionEvent e) {                                            
-				    try {
-				        String nome = campNome.getText().trim();
-				        String novaRaca = campRaca.getText().trim();
-				        String novoTutor = campTutor.getText().trim();
-				        
-				        
-				        if (nome.isEmpty() || novaRaca.isEmpty() || novoTutor.isEmpty()) {
-				            JOptionPane.showMessageDialog(TelaPetShop.this, "Por favor, preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
-				            return;
-				        }
+		btnAtualizar.addActionListener(new ActionListener() { 
+		    public void actionPerformed(ActionEvent e) {                                            
+		        try {
+		            String nome = campNome.getText().trim();
+		            String novaRaca = campRaca.getText().trim();
+		            String novoTutor = campTutor.getText().trim();
+		            String textoIdade = campIdade.getText().trim();
+		            String textoTelefone = campTelefone.getText().trim();
+		            
+		            // Valida se algum campo textual ou numérico está completamente vazio
+		            if (nome.isEmpty() || novaRaca.isEmpty() || novoTutor.isEmpty() || textoIdade.isEmpty() || textoTelefone.isEmpty()) {
+		                JOptionPane.showMessageDialog(TelaPetShop.this, "Por favor, preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
+		                return;
+		            }
 
-				       
-				        int novaIdade = Integer.parseInt(campIdade.getText().trim());
-				        int telefone = Integer.parseInt(campTelefone.getText().trim());
+		            // Conversão e validação específica da Idade
+		            int novaIdade;
+		            try {
+		                novaIdade = Integer.parseInt(textoIdade);
+		            } catch (NumberFormatException ex) {
+		                JOptionPane.showMessageDialog(TelaPetShop.this, "O campo Idade deve conter apenas números inteiros válidos!", "Erro de Digitação", JOptionPane.ERROR_MESSAGE);
+		                return;
+		            }
 
-				     
-				        boolean sucesso = repositorio.atualizarDados(nome, novaRaca, novaIdade, novoTutor, telefone);
-				        
-				        if (sucesso) {
-				        	 JOptionPane.showMessageDialog(TelaPetShop.this, "Cadastro do pet modificado com sucesso!", "Sucesso",JOptionPane.ERROR_MESSAGE);
-				            limparCampos(); 
-				        } else {
-				            JOptionPane.showMessageDialog(TelaPetShop.this, "Nenhum pet encontrado com o nome: " + nome, "Erro", JOptionPane.ERROR_MESSAGE);
-				        }
+		            // Conversão e validação específica do Telefone
+		            int telefone;
+		            try {
+		                telefone = Integer.parseInt(textoTelefone);
+		            } catch (NumberFormatException ex) {
+		                JOptionPane.showMessageDialog(TelaPetShop.this, "O campo Telefone deve conter apenas números!\nNota: Não use espaços, traços ou números muito longos.", "Erro de Digitação", JOptionPane.ERROR_MESSAGE);
+		                return;
+		            }
 
-				    } catch (NumberFormatException novaIdade) {
-				    
-				        JOptionPane.showMessageDialog(TelaPetShop.this, "O campo Idade deve conter apenas números inteiros!", "Erro de Digitação", JOptionPane.ERROR_MESSAGE);
-				    }
-				}
+		            // Executa a atualização no repositório
+		            boolean sucesso = repositorio.atualizarDados(nome, novaRaca, novaIdade, novoTutor, telefone);
+		            
+		            if (sucesso) {
+		                JOptionPane.showMessageDialog(TelaPetShop.this, "Cadastro do pet modificado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+		                limparCampos(); 
+		            } else {
+		                JOptionPane.showMessageDialog(TelaPetShop.this, "Nenhum pet encontrado com o nome: " + nome, "Erro", JOptionPane.ERROR_MESSAGE);
+		            }
 
-			    
-			
-			
-		}); 
+		        } catch (Exception ex) {
+		            JOptionPane.showMessageDialog(TelaPetShop.this, "Ocorreu um erro inesperado: " + ex.getMessage(), "Erro do Sistema", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		});
+ 
 		
 		//----REMOVER----
 		btnRemover.addActionListener(new ActionListener(){
@@ -192,7 +207,7 @@ public class TelaPetShop extends JFrame {
 		btnListar.addActionListener(new ActionListener(){ 
 			public void actionPerformed(ActionEvent e) { 
 				ArrayList<String> lista = repositorio.listarTodos();
-				exibirTexto(lista.toString()); 
+				exibirTexto(String.join("",lista)); 
 	   }
 			}); 
 	}
