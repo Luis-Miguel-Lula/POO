@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class TelaPetShop extends JFrame {
 
@@ -59,7 +60,7 @@ public class TelaPetShop extends JFrame {
         painel.add(campIdade); 
         painel.add(new JLabel("Tutor:")); 
         painel.add(campTutor); 
-        painel.add(new JLabel("Telefone:")); 
+        painel.add(new JLabel("Telefone(Apenas 8 digitos e escreva numeros):")); 
         painel.add(campTelefone); 
 		return painel;
 	}
@@ -97,7 +98,7 @@ public class TelaPetShop extends JFrame {
 				String raca = campRaca.getText().trim();
                 int idade = Integer.parseInt(campIdade.getText());
                 String tutor = campTutor.getText().trim(); 
-                String telefone = campTelefone.getText().trim(); 
+                String telefone = campTelefone.getText();
                 
 				if (nome.isEmpty()) {
 					exibirTexto("ERRO: O campo Nome é obrigatório.");
@@ -112,7 +113,7 @@ public class TelaPetShop extends JFrame {
 
 				repositorio.adicionar(novo);
 				exibirTexto("Pet cadastrado com sucesso!\n\n" + novo.exibirDados() + c1.exibirInformacoes()); 
-				limparCampos();
+				limparCampos(); 
 			} 
 		}); 
 		
@@ -120,39 +121,82 @@ public class TelaPetShop extends JFrame {
 		btnBuscar.addActionListener(new ActionListener(){ 
 			public void actionPerformed(ActionEvent e) { 
 				String nome = campNome.getText().trim(); 
-				repositorio.buscarPorNome(nome); 
+				exibirTexto( repositorio.buscarPorNome(nome).exibirDados()); 
+			 
 				
 			}
 			
 		}); 
 		//---ATUALIZAR--- 
 		btnAtualizar.addActionListener(new ActionListener(){ 
-			public void actionPerformed(ActionEvent e) { 
-				String nome = campNome.getText().trim(); 
-				repositorio.buscarPorNome(nome); 
-				
-			}
+			public void actionPerformed(ActionEvent e) {                                            
+				    try {
+				        String nome = campNome.getText().trim();
+				        String novaRaca = campRaca.getText().trim();
+				        String novoTutor = campTutor.getText().trim();
+				        
+				        
+				        if (nome.isEmpty() || novaRaca.isEmpty() || novoTutor.isEmpty()) {
+				            JOptionPane.showMessageDialog(TelaPetShop.this, "Por favor, preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
+				            return;
+				        }
+
+				       
+				        int novaIdade = Integer.parseInt(campIdade.getText().trim());
+				        int telefone = Integer.parseInt(campTelefone.getText().trim());
+
+				     
+				        boolean sucesso = repositorio.atualizarDados(nome, novaRaca, novaIdade, novoTutor, telefone);
+				        
+				        if (sucesso) {
+				        	 JOptionPane.showMessageDialog(TelaPetShop.this, "Cadastro do pet modificado com sucesso!", "Sucesso",JOptionPane.ERROR_MESSAGE);
+				            limparCampos(); 
+				        } else {
+				            JOptionPane.showMessageDialog(TelaPetShop.this, "Nenhum pet encontrado com o nome: " + nome, "Erro", JOptionPane.ERROR_MESSAGE);
+				        }
+
+				    } catch (NumberFormatException novaIdade) {
+				    
+				        JOptionPane.showMessageDialog(TelaPetShop.this, "O campo Idade deve conter apenas números inteiros!", "Erro de Digitação", JOptionPane.ERROR_MESSAGE);
+				    }
+				}
+
+			    
+			
 			
 		}); 
 		
 		//----REMOVER----
 		btnRemover.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				String nome = campNome.getText().trim();
-				boolean ok = repositorio.remover(nome);
-				if (ok) limparCampos();
-				}
-			});  
+		    public void actionPerformed(ActionEvent e) {
+		        String nome = campNome.getText().trim();
+		        
+		        if (nome.isEmpty()) {
+		            exibirTexto("O nome está vazio!");
+		        } else {
+		            Animal animalEncontrado = repositorio.buscarPorNome(nome); 
+		            
+		            if (animalEncontrado != null) { 
+		                repositorio.remover(nome); 
+		                exibirTexto("Animal \"" + nome + "\" removido com sucesso!");
+		                limparCampos();
+		            } else {
+		                exibirTexto("Nenhum animal encontrado com o nome: " + nome);
+		            }
+		        }
+		    }
+		    });
+
+
 		//---LISTAR TODOS---
 		btnListar.addActionListener(new ActionListener(){ 
 			public void actionPerformed(ActionEvent e) { 
-				String nome = campNome.getText().trim(); 
-				repositorio.buscarPorNome(nome); 
-				
-			}
-			
-		}); 
+				ArrayList<String> lista = repositorio.listarTodos();
+				exibirTexto(lista.toString()); 
+	   }
+			}); 
 	}
+
 			
 
 	// ── Métodos auxiliares ─────────────────────────────────
