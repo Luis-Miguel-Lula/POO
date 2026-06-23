@@ -38,31 +38,25 @@ public class PetShopRepositorio {
 	}
 
 	/** Retorna a lista completa de animais cadastrados (cópia defensiva). */
-	public ArrayList<String> listarTodos() {
-	    ArrayList<String> lista = new ArrayList<>();
-	    
-	    for (Animal c : animais) {
-	        lista.add(c.exibirDados() + System.lineSeparator() );
-	    }
-	    
-	    return lista;
-	}
+	public ArrayList<Animal> listarTodos() { 
+		return animais; 
+		
+    }
 
 	/** Quantidade de animais cadastrados no repositório. */
 	public int quantidade() {
 		return 0;
 	}
 	//Atualização de dados
-	public boolean atualizarDados(String nomeBusca, String novaRaca, int novaIdade, String novoTutor, int telefone) {
-	    for (Animal petAtual : animais) {
-	        if (petAtual.getNome().equalsIgnoreCase(nomeBusca)) {
+	public boolean atualizarDados(String nome,String novaRaca, int novaIdade, String novoTutor, int telefone) {
+	        Animal petAtual = buscarPorNome(nome); 
+	        if (petAtual.getNome().equalsIgnoreCase(nome)) {
 	            petAtual.setRaca(novaRaca);
 	            petAtual.setIdade(novaIdade);
 	            petAtual.setTutor(novoTutor);
-	            petAtual.setTelefone(telefone);
+	            petAtual.setTelefone(telefone); 
 	            return true;
 	        }
-	    }
-	    return false;
+	    return false; 
 	}
 }

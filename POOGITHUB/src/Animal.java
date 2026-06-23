@@ -53,8 +53,10 @@
 	        this.idade = idade;
 	    }
 		
-		public String exibirDados() {
-			return "Nome:" + this.nome +  System.lineSeparator() + "Raca:" + this.raca + System.lineSeparator() + "Idade:" + this.idade + System.lineSeparator() + "Tutor:" + this.tutor +  System.lineSeparator() + "Telefone: " + this.telefone; 
+		@Override
+		
+		public String toString() {
+			return "Nome:" + this.nome +  System.lineSeparator() + "Raca:" + this.raca + System.lineSeparator() + "Idade:" + this.idade; 
 
 		}
 

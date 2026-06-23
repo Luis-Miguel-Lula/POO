@@ -20,7 +20,7 @@ public class Cachorro extends Animal {
         System.out.println("AU AU!");
     }
 
-	public String exibirDados() {
+	public String toString() {
 		return "Nome:" + nome +  System.lineSeparator() + "Raca:" + raca + System.lineSeparator() + "Idade:" + idade + System.lineSeparator(); 
 	}
 }

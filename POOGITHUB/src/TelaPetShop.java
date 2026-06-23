@@ -96,9 +96,9 @@ public class TelaPetShop extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String nome = campNome.getText().trim();
 				String raca = campRaca.getText().trim();
-                int idade = Integer.parseInt(campIdade.getText());
                 String tutor = campTutor.getText().trim(); 
                 String telefone = campTelefone.getText();
+                int idade = Integer.parseInt(campIdade.getText());
                 
 				if (nome.isEmpty()) {
 					exibirTexto("ERRO: O campo Nome é obrigatório.");
@@ -112,7 +112,7 @@ public class TelaPetShop extends JFrame {
 				Cliente c1 = new Cliente(tutor,telefone); 
 
 				repositorio.adicionar(novo);
-				exibirTexto("Pet cadastrado com sucesso!\n\n" + novo.exibirDados() + c1.exibirInformacoes()); 
+				exibirTexto("Pet cadastrado com sucesso!\n\n" + novo.toString() + c1.exibirInformacoes()); 
 				limparCampos(); 
 			} 
 		}); 
@@ -124,7 +124,7 @@ public class TelaPetShop extends JFrame {
 				if(nome.isEmpty()) {
 					exibirTexto("Seu nome esta vazio para a busca");
 				}
-				exibirTexto( repositorio.buscarPorNome(nome).exibirDados() ); 
+				exibirTexto("Pet Buscado\n\n" + repositorio.buscarPorNome(nome).toString() ); 
 			 
 				
 			}
@@ -140,13 +140,10 @@ public class TelaPetShop extends JFrame {
 		            String textoIdade = campIdade.getText().trim();
 		            String textoTelefone = campTelefone.getText().trim();
 		            
-		            // Valida se algum campo textual ou numérico está completamente vazio
 		            if (nome.isEmpty() || novaRaca.isEmpty() || novoTutor.isEmpty() || textoIdade.isEmpty() || textoTelefone.isEmpty()) {
 		                JOptionPane.showMessageDialog(TelaPetShop.this, "Por favor, preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
 		                return;
 		            }
-
-		            // Conversão e validação específica da Idade
 		            int novaIdade;
 		            try {
 		                novaIdade = Integer.parseInt(textoIdade);
@@ -155,7 +152,6 @@ public class TelaPetShop extends JFrame {
 		                return;
 		            }
 
-		            // Conversão e validação específica do Telefone
 		            int telefone;
 		            try {
 		                telefone = Integer.parseInt(textoTelefone);
@@ -164,7 +160,6 @@ public class TelaPetShop extends JFrame {
 		                return;
 		            }
 
-		            // Executa a atualização no repositório
 		            boolean sucesso = repositorio.atualizarDados(nome, novaRaca, novaIdade, novoTutor, telefone);
 		            
 		            if (sucesso) {
@@ -205,9 +200,8 @@ public class TelaPetShop extends JFrame {
 
 		//---LISTAR TODOS---
 		btnListar.addActionListener(new ActionListener(){ 
-			public void actionPerformed(ActionEvent e) { 
-				ArrayList<String> lista = repositorio.listarTodos();
-				exibirTexto(String.join("",lista)); 
+			public void actionPerformed(ActionEvent e) {
+					exibirTexto("Pets listados\n\n" + repositorio.listarTodos().toString()); 
 	   }
 			}); 
 	}
